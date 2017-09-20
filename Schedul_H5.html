@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>jquery.datepicker</title>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+ 
+    <!-- include jquery.datepicker -->
+    <script type="text/javascript" src="js/jquery.datepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/jquery.datepicker.css" />
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $selected = $('.selected');
+            var $start = $('.start');
+            var $toggleMode = $('.toggleMode');
+
+            var $some_datepicker = $('.some_datepicker');
+            $some_datepicker.datepicker();
+            var datepicker = jQueryDatepicker.data($some_datepicker);
+
+            var date = new Date();
+
+            $some_datepicker.on(jQueryDatepicker.event('date_selected'), function (event, date) {
+                if (date.mode == 'date') {
+                    console.log('date selected:', date);
+                } else if (date.mode == 'start_date') {
+                    console.log('start date selected:', date);
+                }
+
+                if (datepicker.isStartDateSelected()) {
+                    $start.show().html('<b>start date:</b> '+date.start_date.date.toString());
+                }
+
+                $selected.show().html('<b>date:</b> '+date.date.toString());
+            });
+
+            // If you need a date range
+            // datepicker.setStartDate({
+            //     year: 2017,
+            //     month: date.getMonth()+1,
+            //     day: 4
+            // });
+
+            // today
+            datepicker.setDate({
+                year: date.getYear(),
+                // jquery.datepicker accepts first month as 1
+                // (built-in Date() class accepts first month as 0)
+                month: date.getMonth()+1,
+                day: date.getDate()
+            });
+
+            $toggleMode.on('click', function (event) {
+                datepicker.toggleMode();
+
+                if (datepicker.getMode() == 'date') {
+                    $toggleMode.html('toggle start date selection mode');
+                } else {
+                    $toggleMode.html('toggle date selection mode');
+                }
+            });
+        });
+    </script>
+<style type="text/css">
+:root {
+  --gray-color: #f0f0f0;
+  --line-color: #dadada;
+  --border-width: 2px;
+  --main-size: 16px;
+  --table-font-size: .75rem;
+  --table-padding: 6px;
+}
+*{
+    margin: 0;
+    padding: 0;
+    list-style:none;
+}
+html,body{
+    font-family:"Microsoft JhengHei","Roboto Condensed", "Helvetica Neue", sans-serif;
+    font-display:swap;
+    font-size: var(--main-size);
+    line-height: 1.5;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+.wrapper{
+    display:block;
+    width: 100%;
+    /*padding:0 15px;*/
+    max-width:1024px;
+    min-height:100vh;
+    margin:0 auto;
+}
+.wrapper *{
+    box-sizing: border-box;
+}
+table{
+    width: 100%;
+    font-size: var(--table-font-size);
+    border-spacing:unset;
+    border-top:var(--border-width) solid var(--line-color);
+}
+table>thead th{
+    border:0;
+    border-bottom:var(--border-width) solid #67b460;
+    text-align:left;
+    padding:0 var(--table-padding);
+}
+table>tbody td{
+    border-bottom:var(--border-width) solid var(--line-color);
+    padding:var(--table-padding);
+}
+header{
+    padding:var(--table-padding);
+    display:-webkit-flex;
+    display:flex;
+    align-items:center;
+    -webkit-align-items:center;
+    position:-webkit-sticky;
+    position:sticky;
+    top:0;
+    z-index:9999;
+}
+header>*{
+    font-size: 1rem;
+    margin-right: 20px;
+}
+header>a{
+    display:-webkit-flex;
+    display:flex;
+}
+header svg{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.inline-list{
+    display:-webkit-flex;
+    display:flex;
+    flex-wrap:wrap;
+    margin-top:.125rem;
+    margin-bottom: .125rem;
+    font-size: 1rem;
+}
+.inline-list>*{
+    display:-webkit-flex;
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    width:50%;
+    padding:8px var(--table-padding);
+    font-size: .75rem;
+    width: 25%;
+}
+.inline-list>* span{
+    display:inline-block;
+    width: .75rem;
+    height: .75rem;
+    margin-right:.25rem;
+}
+.main-color{
+    color:#67b460;
+}
+.main-bg{
+    background-color:#67b460;
+}
+.green-color{
+    color:#daedd9;
+}
+.green-bg{
+    background-color:#daedd9;
+}
+.gray-bg{
+    background-color:var(--gray-color);
+}
+.pink-bg{
+    background-color:#ffebef;
+}
+.purple-bg{
+    background-color:#d7d3f0;
+}
+.orange-bg{
+    background-color:#f5cab8;
+}
+.yellow-bg{
+    background-color:#fcecca;
+}
+.fff-color{
+    color:#fff;
+}
+.plr-15{
+    padding-left:15px;
+    padding-right:15px;
+}
+.nowrap{
+    white-space: nowrap;
+}
+
+
+/*datepicker*/
+.some_datepicker{
+    padding-bottom:2px;
+    border-bottom: var(--border-width) solid var(--line-color);
+}
+.jQueryDatepicker_header{
+    background:#daedd9;
+    color:#67b460;
+    font-size: 5.5vw;
+    height: 2.75rem;
+}
+.jQueryDatepicker_header_sidebutton{
+    color:#67b460;
+}
+.jQueryDatepicker_calendar_months_month_weekdays{
+    background:none;
+}
+.jQueryDatepicker_calendar_months_month_weekdays_weekday,
+.jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day{
+    font-size: 4vw;
+}
+.jQueryDatepicker_calendar_months_month_weekdays_weekday_title{
+    background: #fff;
+    box-shadow: none;
+    color:#67b460;
+    font-weight:400;
+    border-left:var(--border-width) solid var(--gray-color);
+    border-right:var(--border-width) solid var(--gray-color);
+}
+.jQueryDatepicker_calendar_months_month_weekdays>.jQueryDatepicker_calendar_months_month_weekdays_weekday:nth-of-type(2)>.jQueryDatepicker_calendar_months_month_weekdays_weekday_title{
+    border-left:0;
+}
+.jQueryDatepicker_calendar_months_month_weekdays>.jQueryDatepicker_calendar_months_month_weekdays_weekday:nth-of-type(8)>.jQueryDatepicker_calendar_months_month_weekdays_weekday_title{
+    border-right:0;
+}
+.jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day{
+    height: 10vw;
+    min-height:1.5rem;
+}
+.jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day{
+    border:var(--border-width) solid #fff;
+    box-sizing:border-box;
+}
+.jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day{
+    background-color:var(--gray-color);
+}
+
+/*姑且把所有週六都當成休息日*/
+.jQueryDatepicker_calendar_months_month_weekdays>.jQueryDatepicker_calendar_months_month_weekdays_weekday:nth-of-type(7) .jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day:not(.jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day-day-undefined){
+    background-color:#ffebef;
+}
+/*姑且把所有週日都當成例假日*/
+.jQueryDatepicker_calendar_months_month_weekdays>.jQueryDatepicker_calendar_months_month_weekdays_weekday:nth-of-type(8) .jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day:not(.jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day-day-undefined){
+    background-color:#d7d3f0;
+}
+.jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day.jQueryDatepicker__current_other_diff{
+    background:#ccc!important;
+}
+.jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day.jQueryDatepicker__current{
+    color:#67b460!important;
+    background:#daedd9!important;
+}
+@media screen and (min-width: 768px) {
+    .jQueryDatepicker_header{
+        font-size: 2rem;
+    }
+  .jQueryDatepicker_calendar_months_month_weekdays_weekday,
+  .jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day {
+     font-size: 1.75rem;
+  }
+  .jQueryDatepicker_calendar_months_month_weekdays_weekday_days_day{
+    height: 100px;
+  }
+  html,body{
+    font-size: var(--main-size);
+  }
+  table{
+    font-size: 1.25rem;
+  }
+  header>*{
+    font-size: 1.5rem;
+  }
+  header svg{
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .inline-list>*{
+    font-size: 1.25rem;
+    width: 200px;
+  }
+  .inline-list>* span{
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  svg {
+    width: 100%; 
+  }
+}
+</style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="fff-color main-bg plr-15">
+                <svg version="1.1" id="prev" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve" preserveAspectRatio="xMidYMid meet">
+                    <line x1="3" y1="25.6" x2="24" y2="5" stroke="#fff" stroke-width="5" />
+                    <line x1="3" y1="22.4" x2="24" y2="43" stroke="#fff" stroke-width="5" />
+                    <line x1="5" y1="24" x2="48" y2="24" stroke="#fff" stroke-width="5" />
+                </svg>
+            <h1>我的排班</h1>
+        </header>
+        <main>
+        <div>
+            <div class="some_datepicker"></div>
+        </div>
+        <ul class="inline-list">
+            <li><span class="gray-bg"></span>工作日</li>
+            <li><span class="pink-bg"></span>例假日</li>
+            <li><span class="purple-bg"></span>休息日</li>
+            <li><span class="orange-bg"></span>國定假日</li>
+            <li><span class="yellow-bg"></span>免出勤日</li>
+            <li><span class="green-bg"></span>當前日</li>
+            <!-- <li><span class="gray-bg"></span>未排程</li> -->
+        </ul>
+        <table>
+            <thead>
+                <tr class="green-bg main-color">
+                    <th>排程日期</th>
+                    <th>班別名稱</th>
+                    <th>上班時間<br/>下班時間</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="nowrap">2017-03-24</td>
+                    <td>仁寶夜班</td>
+                    <td class="nowrap">2017-03-24 18:00<br/>2017-03-25 02:00</td>
+                </tr>
+                <tr>
+                    <td class="nowrap">2017-03-24</td>
+                    <td>仁寶夜班</td>
+                    <td class="nowrap">2017-03-24 18:00<br/>2017-03-25 02:00</td>
+                </tr>
+                <tr>
+                    <td class="nowrap">2017-03-24</td>
+                    <td>仁寶夜班</td>
+                    <td class="nowrap">2017-03-24 18:00<br/>2017-03-25 02:00</td>
+                </tr>
+            </tbody>
+        </table>
+        </main>
+    </div>
+</body>
+</html>

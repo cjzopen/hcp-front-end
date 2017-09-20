@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>jquery.datepicker</title>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+ 
+    <!-- include jquery.datepicker -->
+    <script type="text/javascript" src="js/jquery.datepicker.js"></script>
+    <script>
+        function autogrow(textarea){
+            var adjustedHeight=textarea.clientHeight;
+            adjustedHeight=Math.max(textarea.scrollHeight,adjustedHeight);
+            if (adjustedHeight>textarea.clientHeight){
+                textarea.style.height=adjustedHeight+'px';
+            }
+        }
+        // textarea auto height
+        $(document).on('keyup','textarea',function(){
+            autogrow(this)
+        })
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/jquery.datepicker.css" />
+<style type="text/css">
+:root {
+  --main-color: #656595;
+  --gray-color: #f0f0f0;
+  --line-color: #dadada;
+  --border-width: 2px;
+  --main-size: 16px;
+  --table-padding: 6px;
+}
+*{
+    margin: 0;
+    padding: 0;
+    list-style:none;
+}
+html,body{
+    font-family:"Microsoft JhengHei","Roboto Condensed", "Helvetica Neue", sans-serif;
+    font-display:swap;
+    font-size: var(--main-size);
+    line-height: 1.5;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+.wrapper{
+    display:block;
+    width: 100%;
+    /*padding:0 15px;*/
+    max-width:1024px;
+    min-height:100vh;
+    margin:0 auto;
+}
+.wrapper *{
+    box-sizing: border-box;
+}
+figure{
+    background-image:url(img/home/HCP-banner.png);
+    max-height: 700px;
+    height:40vh;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:bottom center;
+}
+figure>img{
+    max-width:100%;
+    outline:none;
+    border:none;
+}
+h1{
+    font-size: 1.5rem;
+    margin-bottom:.5rem;
+}
+form{
+    width: 100%;
+    text-align: center;
+    display:-webkit-flex;
+    display:flex;
+    -webkit-flex-direction:column;
+    flex-direction:column;
+    -webkit-justify-content:center;
+    justify-content:center;
+    -webkit-align-items:center;
+    align-items:center;
+}
+input[type="text"],.btn{
+    -webkit-appearance: none;
+    border:1px solid var(--line-color);
+    border-radius:none;
+    box-shadow:none;
+    outline:none;
+    font-size: 1rem;
+    padding:6px 15px;
+    width: 100%;
+    max-width: 14rem;
+    margin:var(--table-padding) 0;
+}
+/*input placeholder*/
+::-webkit-input-placeholder {
+    color: #505050;
+}
+::-moz-placeholder {
+    color: #505050;
+}
+:-ms-input-placeholder {
+    color: #505050;
+}
+:-moz-placeholder {
+    color: #505050;
+}
+
+input[type="text"]:focus{
+    border-color:var(--main-color);
+}
+.btn{
+    color:#fff;
+    background-color: var(--main-color);
+}
+.main-color{
+    color: var(--main-color);
+}
+.main-bg{
+    background-color:var(--main-color);
+}
+.fff-color{
+    color:#fff;
+}
+.plr-15{
+    padding-left:15px;
+    padding-right:15px;
+}
+.nowrap{
+    white-space: nowrap;
+}
+@media screen and (min-width: 768px) {
+  html,body{
+    font-size: 24px;
+  }
+  figure{
+    background-position:center center;
+    margin-bottom:1.5rem;
+  }
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  svg {
+    width: 100%; 
+  }
+}
+</style>
+</head>
+<body>
+    <div class="wrapper">
+        <main>
+            <figure>
+                <!-- <img src="img/home/HCP-banner.png" alt="banner"> -->
+            </figure>
+            <form class="plr-15">
+                <h1 class="main-color">HCP 人力資產規劃系統</h1>
+                <input type="text" placeholder="帳號">
+                <input type="text" placeholder="密碼">
+                <button type="submit" class="btn">登 入</button>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

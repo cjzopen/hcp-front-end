@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>jquery.datepicker</title>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<style type="text/css">
+:root {
+  --main-color: #845199;
+  --purple-color: #ede5f0;
+  --gray-color: #505050;
+  --line-color: #dadada;
+  --border-width: 2px;
+  --main-size: 16px;
+  --table-font-size: .875rem;
+  --table-padding: 6px;
+}
+*{
+    margin: 0;
+    padding: 0;
+    list-style:none;
+}
+html,body{
+    font-family:"Microsoft JhengHei","Roboto Condensed", "Helvetica Neue", sans-serif;
+    font-display:swap;
+    font-size: var(--main-size);
+    line-height: 1.5;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    height: 100%;
+}
+.wrapper{
+    display:block;
+    width: 100%;
+    /*padding:0 15px;*/
+    max-width:1024px;
+    min-height:100vh;
+    margin:0 auto;
+}
+.wrapper *{
+    box-sizing: border-box;
+}
+table{
+    width: 100%;
+    font-size: var(--table-font-size);
+    border-spacing:unset;
+    line-height:1.414;
+}
+header{
+    padding: var(--table-padding);
+    display:-webkit-flex;
+    display:flex;
+    -webkit-align-items:center;
+    align-items:center;
+    position:-webkit-sticky;
+    position:sticky;
+    top:0;
+    z-index:9999;
+}
+header>*{
+    font-size: 1rem;
+    margin-right: 20px;
+}
+header>a{
+    display:-webkit-flex;
+    display:flex;
+}
+header svg{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/*panel*/
+.panel>.panel-head svg{
+    transform-origin:center center;
+    transform: rotate(0deg);
+    transition:all .4s;
+}
+.panel.act>.panel-head svg{
+    transform: rotate(90deg);
+    transition:all .4s;
+}
+.panel>.panel-head{
+    padding: var(--table-padding) 15px;
+    display:-webkit-flex;
+    display:flex;
+    -webkit-align-items:center;
+    align-items:center;
+    -webkit-justify-content:space-between;
+    justify-content:space-between;
+    background-color:var(--purple-color);
+    border-bottom:1px solid var(--main-color);
+    color:var(--main-color);
+    font-size: 1rem;
+    font-weight:bold;
+}
+.panel>.panel-head svg{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.panel>.panel-body{
+    margin: 0;
+    width: 100%;
+    display:none;
+    /*transform: scaleY(0);
+    transform-origin: top;
+    transition:all .4s;*/
+}
+/*.panel.act>.panel-body{
+    transform: scaleY(1);
+    transition:all .4s;
+}*/
+table{
+    width: 100%;
+    font-size:var(--table-font-size);
+}
+table td,table th{
+    padding: var(--table-padding);
+    border-bottom:var(--border-width) solid var(--line-color);
+}
+table th{
+    white-space:nowrap;
+    text-align:right;
+    color: var(--gray-color);
+    width: 5rem;
+}
+table td{
+    text-align:left;
+}
+table tr:last-child td,table tr:last-child th{
+    border-bottom:none;
+}
+.main-color{
+    color: var(--main-color);
+}
+.main-bg{
+    background-color:var(--main-color);
+}
+.purple-color{
+    color: var(--purple-color);
+}
+.purple-bg{
+    background-color:var(--purple-color);
+}
+.fff-color{
+    color:#fff;
+}
+.plr-15{
+    padding-left:15px;
+    padding-right:15px;
+}
+.nowrap{
+    white-space: nowrap;
+}
+.input-area{
+    display:-webkit-flex;
+    display:flex;
+    -webkit-align-items:center;
+    align-items:center;
+    margin-bottom:4px;
+}
+.input-area input{
+    margin-right:.25rem;
+}
+@media screen and (min-width: 768px) {
+  html,body{
+    font-size: 24px;
+  }
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  svg {
+    width: 100%; 
+  }
+}
+</style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="fff-color main-bg plr-15">
+            <svg version="1.1" id="prev" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve" preserveAspectRatio="xMidYMid meet">
+                    <line x1="3" y1="25.6" x2="24" y2="5" stroke="#fff" stroke-width="5" />
+                    <line x1="3" y1="22.4" x2="24" y2="43" stroke="#fff" stroke-width="5" />
+                    <line x1="5" y1="24" x2="48" y2="24" stroke="#fff" stroke-width="5" />
+            </svg>
+            <h1>我的訊息</h1>
+        </header>
+        <main>
+            <div class="panel">
+                <div class="panel-head">
+                    <strong>個人資料</strong>
+                    <svg version="1.1" id="more_" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve" preserveAspectRatio="xMidYMid meet">
+                        <line x1="20" y1="13" x2="10" y2="4" stroke="#845199" stroke-width="3" />
+                        <line x1="20" y1="11" x2="10" y2="20" stroke="#845199" stroke-width="3" />
+                    </svg>
+                </div>
+                <div class="panel-body plr-15">
+                    <table>
+                        <tr>
+                            <th>員工編號</th>
+                            <td>ES68577</td>
+                        </tr>
+                        <tr>
+                            <th>員工姓名</th>
+                            <td>那样这种引发生活推广植非。</td>
+                        </tr>
+                        <tr>
+                            <th>一二三四</th>
+                            <td>那样这种距更是把，江苏每个网际快车推动适合公安仪器并非。</td>
+                        </tr>
+                        <tr>
+                            <th>一</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>二三</th>
+                            <td>那样这种引发生活推广植非。</td>
+                        </tr>
+                        <tr>
+                            <th>dfas</th>
+                            <td>那样这种引发生活推广植非。</td>
+                        </tr>
+                        <tr>
+                            <th>dfas</th>
+                            <td>那样这种引发生活推广植非。</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-head">
+                    <strong>聯繫信息</strong>
+                    <svg version="1.1" id="more_" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve" preserveAspectRatio="xMidYMid meet">
+                        <line x1="20" y1="13" x2="10" y2="4" stroke="#845199" stroke-width="3" />
+                        <line x1="20" y1="11" x2="10" y2="20" stroke="#845199" stroke-width="3" />
+                    </svg>
+                </div>
+                <div class="panel-body plr-15">
+                    <table>
+                        <tr>
+                            <th>dfas</th>
+                            <td>那样这种距更是把，江苏每个网际快车推动适合公安仪器并非。</td>
+                        </tr>
+                        <tr>
+                            <th>dfas</th>
+                            <td>那样这种引发生活推广植非。</td>
+                        </tr>
+                        <tr>
+                            <th>dfas</th>
+                            <td>那样</td>
+                        </tr>
+                        <tr>
+                            <th>dfas</th>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+<script>
+$(function(){
+    $('.panel-head').on('click',function(){
+        var group = $(this).closest('.panel');
+        if(group.hasClass('act')){
+            group.toggleClass('act').find('.panel-body').slideUp();
+        }else{
+            group.toggleClass('act').siblings().removeClass('act').find('.panel-body').slideUp();
+            group.find('.panel-body').slideDown();
+        }
+    });
+
+
+    // 第一組 panel 先展開
+    $('.panel:first .panel-head svg').trigger('click')
+})
+</script>
+</body>
+</html>

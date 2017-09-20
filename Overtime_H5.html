@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>jquery.datepicker</title>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script>
+        function autogrow(textarea){
+            var adjustedHeight=textarea.clientHeight;
+            adjustedHeight=Math.max(textarea.scrollHeight,adjustedHeight);
+            if (adjustedHeight>textarea.clientHeight){
+                textarea.style.height=adjustedHeight+'px';
+            }
+        }
+        // textarea auto height
+        $(document).on('keyup','textarea',function(){
+            autogrow(this)
+        })
+    </script>
+<style type="text/css">
+:root {
+  --main-color: #5b6aab;
+  --purple-color: #eef;
+  --gray-color: #f0f0f0;
+  --line-color: #dadada;
+  --border-width: 2px;
+  --main-size: 16px;
+  --table-font-size: .75rem;
+  --table-padding: 6px;
+}
+*{
+    margin: 0;
+    padding: 0;
+    list-style:none;
+}
+html,body{
+    font-family:"Microsoft JhengHei","Roboto Condensed", "Helvetica Neue", sans-serif;
+    font-display:swap;
+    font-size: var(--main-size);
+    line-height: 1.5;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    height: 100%;
+}
+.wrapper{
+    display:block;
+    width: 100%;
+    /*padding:0 15px;*/
+    max-width:1024px;
+    min-height:100vh;
+    margin:0 auto;
+}
+main{
+    min-height:calc(100vh - 2.25rem);
+}
+.wrapper *{
+    box-sizing: border-box;
+}
+table{
+    width: 100%;
+    font-size: var(--table-font-size);
+    border-spacing:unset;
+    line-height:1.414;
+}
+table>thead th{
+    border:0;
+    border-bottom:var(--border-width) solid var(--main-color);
+    text-align:left;
+    padding:2px var(--table-padding);
+}
+table>tbody>tr:nth-child(even){
+    background-color: var(--gray-color);
+}
+table>tbody td{
+    padding: var(--table-padding);
+    vertical-align:top;
+}
+header{
+    padding: var(--table-padding);
+    display:-webkit-flex;
+    display:flex;
+    -webkit-align-items:center;
+    align-items:center;
+    position:-webkit-sticky;
+    position:sticky;
+    top:0;
+    z-index:9999;
+}
+header>*{
+    font-size: 1rem;
+    margin-right: 20px;
+}
+header>a{
+    display:-webkit-flex;
+    display:flex;
+}
+header svg{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+textarea{
+    -webkit-appearance: none;
+    border:1px solid var(--line-color);
+    border-radius:0;
+    resize:none;
+    overflow:hidden;
+    box-shadow: none;
+    outline:none;
+    padding:0 4px;
+}
+input[type="radio"],input[type="checkbox"]{
+    width: .75rem;
+    height: .75rem;
+}
+#button-area{
+    font-size: .75rem;
+    display:-webkit-flex;
+    display:flex;
+    -webkit-justify-content:center;
+    justify-content:center;
+    padding: 5px;
+}
+#button-area>div{
+    display:inline-block;
+    width: 8rem;
+    margin:0 5px;
+    white-space:nowrap;
+    text-align:center;
+    padding:var(--table-padding) 2px;
+    background-color:var(--main-color);
+    color:#fff;
+    cursor:pointer;
+}
+
+/*paging*/
+.paging{
+    display:inline-block;
+    margin:0 auto;
+    padding:4px 16px;
+    position:relative;
+    font-size: .75rem;
+}
+.paging>svg{
+    position:absolute;
+    z-index:10;
+    width: 12px;
+    height: 12px;
+    cursor:pointer;
+    top:calc(50% - 6px);
+}
+.paging>svg#paging_prev{
+    left: 2px;
+}
+.paging>svg#paging_next{
+    right: 2px;
+}
+.paging-number{
+    display:-webkit-flex;
+    display:flex;
+    -webkit-justify-content:space-between;
+    justify-content:space-between;
+}
+.paging-number>a{
+    color:#000;
+    opacity:.5;
+    text-decoration:none;
+    padding:0 10px;
+    display:-webkit-flex;
+    display:flex;
+    -webkit-justify-content:center;
+    justify-content:center;
+}
+.paging .act{
+    color:var(--main-color);
+    font-weight:bold;
+    opacity:1;
+}
+footer{
+    text-align:center;
+    position:-webkit-sticky;
+    position:sticky;
+    bottom:0;
+    z-index:99;
+    background-color:var(--gray-color);
+    border-top:var(--border-width) solid var(--line-color);
+}
+.main-color{
+    color: var(--main-color);
+}
+.main-bg{
+    background-color:var(--main-color);
+}
+.purple-color{
+    color: var(--purple-color);
+}
+.purple-bg{
+    background-color:var(--purple-color);
+}
+.fff-color{
+    color:#fff;
+}
+.plr-15{
+    padding-left:15px;
+    padding-right:15px;
+}
+.nowrap{
+    white-space: nowrap;
+}
+.input-area{
+    display:-webkit-flex;
+    display:flex;
+    -webkit-align-items:center;
+    align-items:center;
+    margin-bottom:4px;
+}
+.input-area input{
+    margin-right:.25rem;
+}
+@media screen and (min-width: 768px) {
+  html,body{
+    font-size: 24px;
+  }
+  /*table{
+    font-size: 1rem;
+  }
+  header>*{
+    font-size: 1.5rem;
+  }
+  header svg{
+    width: 1.5rem;
+    height: 1.5rem;
+  }*/
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  svg {
+    width: 100%; 
+  }
+}
+</style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="fff-color main-bg plr-15">
+            <svg version="1.1" id="prev" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve" preserveAspectRatio="xMidYMid meet">
+                    <line x1="3" y1="25.6" x2="24" y2="5" stroke="#fff" stroke-width="5" />
+                    <line x1="3" y1="22.4" x2="24" y2="43" stroke="#fff" stroke-width="5" />
+                    <line x1="5" y1="24" x2="48" y2="24" stroke="#fff" stroke-width="5" />
+            </svg>
+            <h1>加班待簽核</h1>
+        </header>
+        <main>
+        <table>
+            <thead class="purple-bg main-color">
+                <tr>
+                    <th></th>
+                    <th class="nowrap">駁回原因</th>
+                    <th class="nowrap" style="width: 30%">部門<br/>員工姓名</th>
+                    <th class="nowrap">開始時間<br/>結束時間</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_0">
+                            <label>無決定</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_1">
+                            <label>核准</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_2">
+                            <label>駁回</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label for="Area"></label>
+                        <textarea name="Area" id="Area" cols="10" rows="4" style="width: 100%"></textarea>
+                    </td>
+                    <td>T1<br/>一二三四五六七八九十一二三四五六七八九十</td>
+                    <td class="nowrap">
+                        <div>2017-03-21 <br>14:00:00</div>
+                        <div>2017-03-21 <br>16:00:00</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_0">
+                            <label>無決定</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_1">
+                            <label>核准</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_2">
+                            <label>駁回</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label for="Area"></label>
+                        <textarea name="Area" id="Area" cols="10" rows="4" style="width: 100%"></textarea>
+                    </td>
+                    <td>T1<br/>王篠雯</td>
+                    <td class="nowrap">
+                        <div>2017-03-21 <br>14:00:00</div>
+                        <div>2017-03-21 <br>16:00:00</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_0">
+                            <label>無決定</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_1">
+                            <label>核准</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_2">
+                            <label>駁回</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label for="Area"></label>
+                        <textarea name="Area" id="Area" cols="10" rows="4" style="width: 100%"></textarea>
+                    </td>
+                    <td>T1<br/>王篠雯</td>
+                    <td class="nowrap">
+                        <div>2017-03-21 <br>14:00:00</div>
+                        <div>2017-03-21 <br>16:00:00</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_0">
+                            <label>無決定</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_1">
+                            <label>核准</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_2">
+                            <label>駁回</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label for="Area"></label>
+                        <textarea name="Area" id="Area" cols="10" rows="4" style="width: 100%"></textarea>
+                    </td>
+                    <td>T1<br/>王篠雯</td>
+                    <td class="nowrap">
+                        <div>2017-03-21 <br>14:00:00</div>
+                        <div>2017-03-21 <br>16:00:00</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_0">
+                            <label>無決定</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_1">
+                            <label>核准</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_2">
+                            <label>駁回</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label for="Area"></label>
+                        <textarea name="Area" id="Area" cols="10" rows="4" style="width: 100%"></textarea>
+                    </td>
+                    <td>T1<br/>王篠雯</td>
+                    <td class="nowrap">
+                        <div>2017-03-21 <br>14:00:00</div>
+                        <div>2017-03-21 <br>16:00:00</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_0">
+                            <label>無決定</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_1">
+                            <label>核准</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_2">
+                            <label>駁回</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label for="Area"></label>
+                        <textarea name="Area" id="Area" cols="10" rows="4" style="width: 100%"></textarea>
+                    </td>
+                    <td>T1<br/>王篠雯</td>
+                    <td class="nowrap">
+                        <div>2017-03-21 <br>14:00:00</div>
+                        <div>2017-03-21 <br>16:00:00</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_0">
+                            <label>無決定</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_1">
+                            <label>核准</label>
+                        </div>
+                        <div class="nowrap input-area">
+                            <input type="radio" name="RadioGroup1" value="0" id="RadioGroup1_2">
+                            <label>駁回</label>
+                        </div>
+                    </td>
+                    <td>
+                        <label for="Area"></label>
+                        <textarea name="Area" id="Area" cols="10" rows="4" style="width: 100%"></textarea>
+                    </td>
+                    <td>T1<br/>王篠雯</td>
+                    <td class="nowrap">
+                        <div>2017-03-21 <br>14:00:00</div>
+                        <div>2017-03-21 <br>16:00:00</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </main>
+        <footer>
+            <div id="button-area">
+                <div>提交所選</div>
+                <div>駁回全部</div>
+                <div>核淮全部</div>
+                <div>重置</div>
+            </div>
+            <div class="paging">
+                <svg version="1.1" id="paging_prev" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 12 12" enable-background="new 0 0 12 12" xml:space="preserve" preserveAspectRatio="xMidYMid meet">
+                    <line x1="2" y1="6.5" x2="7" y2="2" stroke="#5b6aab" stroke-width="2" />
+                    <line x1="2" y1="5.5" x2="7" y2="10" stroke="#5b6aab" stroke-width="2" />
+                </svg>
+                <svg version="1.1" id="paging_next" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 12 12" enable-background="new 0 0 12 12" xml:space="preserve" preserveAspectRatio="xMidYMid meet">
+                    <line x1="10" y1="6.5" x2="5" y2="2" stroke="#5b6aab" stroke-width="2" />
+                    <line x1="10" y1="5.5" x2="5" y2="10" stroke="#5b6aab" stroke-width="2" />
+                </svg>
+                <div class="paging-number">
+                    <a class="act" href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">6</a>
+                    <a href="#">7</a>
+                    <a href="#">8</a>
+                    <a href="#">9</a>
+                    <a href="#">10</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+<script>
+$(function(){
+    var totalPage = $('.paging-number>a').length;
+    if(totalPage <=1){
+        $('.paging').hide()
+    }else if(totalPage >1 && totalPage <=5){
+        $('.paging svg').hide()
+    }else{
+        pagingShow();
+        $('.paging #paging_prev').on('click',function() {
+            var first = $('.paging-number').children('a:visible:first');
+            first.prevAll(':lt(5)').show();
+            first.prev().nextAll().hide();
+        });
+
+        $('.paging #paging_next').on('click',function() {
+            var last = $('.paging-number').children('a:visible:last');
+            last.nextAll(':lt(5)').show();
+            last.next().prevAll().hide();
+        });
+        $('.paging-number>a').on('click',function(){
+            $(this).addClass('act').siblings().removeClass('act');
+            pagingShow();
+        });
+
+        function pagingShow(){
+            var index = $('.paging-number>a.act').index();
+            var totalPage = $('.paging-number>a').length;
+            $('.paging-number a').hide();
+            if(index <= 2){
+                $('.paging-number a:lt(5)').show();
+            }else if(totalPage - index <= 3){
+                $('.paging-number a').slice(-5).show();
+            }else{
+                $('.paging-number a.act').show().nextAll().slice(0, 2).show();
+                $('.paging-number a.act').prevAll().slice(0, 2).show();
+            }
+        };
+    }
+})
+</script>
+</body>
+</html>

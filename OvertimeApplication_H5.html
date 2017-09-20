@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>jquery.datepicker</title>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+
+    <!-- time picker -->
+    <script src="lib/laydate/laydate_modify.js"></script>
+ 
+    <script>
+        function autogrow(textarea){
+            var adjustedHeight=textarea.clientHeight;
+            adjustedHeight=Math.max(textarea.scrollHeight,adjustedHeight);
+            if (adjustedHeight>textarea.clientHeight){
+                textarea.style.height=adjustedHeight+'px';
+            }
+        }
+        // textarea auto height
+        $(document).on('keyup','textarea',function(){
+            autogrow(this)
+        })
+    </script>
+<style type="text/css">
+:root {
+  --main-color: #e85d88;
+  --pink-color: #ffeff2;
+  --gray-color: #f0f0f0;
+  --line-color: #dadada;
+  --border-width: 2px;
+  --main-size: 16px;
+  --table-font-size: .875rem;
+  --table-padding: 6px;
+}
+*{
+    margin: 0;
+    padding: 0;
+    list-style:none;
+}
+html,body{
+    font-family:"Microsoft JhengHei","Roboto Condensed", "Helvetica Neue", sans-serif;
+    font-display:swap;
+    font-size: var(--main-size);
+    line-height: 1.5;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    height: 100%;
+}
+.wrapper{
+    display:block;
+    width: 100%;
+    /*padding:0 15px;*/
+    max-width:1024px;
+    min-height:100vh;
+    margin:0 auto;
+}
+main{
+    min-height:calc(100vh - 2.25rem);
+}
+.wrapper *{
+    box-sizing: border-box;
+}
+table{
+    width: 100%;
+    font-size: var(--table-font-size);
+    border-spacing:unset;
+    line-height:1.414;
+}
+
+table td,table th{
+    padding: var(--table-padding);
+    vertical-align:top;
+}
+table th{
+    white-space: nowrap;
+    text-align: right;
+    color: #505050;
+    width: 5rem;
+}
+header{
+    padding: var(--table-padding);
+    display:-webkit-flex;
+    display:flex;
+    -webkit-align-items:center;
+    align-items:center;
+    position:-webkit-sticky;
+    position:sticky;
+    top:0;
+    z-index:9999;
+}
+header>*{
+    font-size: 1rem;
+    margin-right: 20px;
+}
+header>a{
+    display:-webkit-flex;
+    display:flex;
+}
+header svg{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+select,
+textarea,
+input[type="text"],input[type="email"],input[type="tel"],input[type="password"]{
+    border:1px solid var(--line-color);
+    border-radius:0;
+    box-shadow: none;
+    outline:none;
+    padding:4px;
+    font-size: var(--table-font-size);
+}
+select{
+    width: 100%;
+    background-color:#fff;
+}
+textarea{
+    -webkit-appearance: none;
+    resize:none;
+    overflow:hidden;
+}
+input[type="text"],input[type="email"],input[type="tel"],input[type="password"],select.timepicker{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+}
+input[type="radio"],input[type="checkbox"]{
+    width: .75rem;
+    height: .75rem;
+}
+aside{
+    padding:var(--table-padding) 15px;
+    color: #505050;
+}
+#button-area{
+    font-size: .75rem;
+    display:-webkit-flex;
+    display:flex;
+    -webkit-justify-content:center;
+    justify-content:center;
+    padding: 5px;
+}
+#button-area>div{
+    display:inline-block;
+    width: 8rem;
+    margin:0 5px;
+    white-space:nowrap;
+    text-align:center;
+    padding:var(--table-padding) 2px;
+    background-color:var(--main-color);
+    color:#fff;
+    cursor:pointer;
+}
+
+footer{
+    text-align:center;
+    position:-webkit-sticky;
+    position:sticky;
+    bottom:0;
+    z-index:99;
+    background-color:var(--gray-color);
+    border-top:var(--border-width) solid var(--line-color);
+}
+.main-color{
+    color: var(--main-color);
+}
+.main-bg{
+    background-color:var(--main-color);
+}
+.pink-color{
+    color: var(--pink-color);
+}
+.pink-bg{
+    background-color:var(--pink-color);
+}
+.fff-color{
+    color:#fff;
+}
+.plr-15{
+    padding-left:15px;
+    padding-right:15px;
+}
+.nowrap{
+    white-space: nowrap;
+}
+.inline-list{
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap:wrap;
+    flex-wrap:wrap;
+}
+.inline-list>*{
+    padding-right:1rem;
+}
+.input-area{
+    display:-webkit-flex;
+    display:flex;
+    -webkit-align-items:center;
+    align-items:center;
+    margin-bottom:4px;
+}
+.input-area input{
+    margin-right:.25rem;
+}
+
+/*timepicker*/
+.layui-laydate .layui-this{
+    background-color:var(--main-color) !important;
+}
+.layui-laydate-footer span:hover{
+    color:var(--main-color) !important;
+}
+.layui-laydate table{
+    font-size:14px;
+}
+
+@media screen and (min-width: 768px) {
+  html,body{
+    font-size: 24px;
+  }
+  /*table{
+    font-size: 1rem;
+  }
+  header>*{
+    font-size: 1.5rem;
+  }
+  header svg{
+    width: 1.5rem;
+    height: 1.5rem;
+  }*/
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  svg {
+    width: 100%; 
+  }
+}
+</style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="fff-color main-bg plr-15">
+                <svg version="1.1" id="prev" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve" preserveAspectRatio="xMidYMid meet">
+                    <line x1="3" y1="25.6" x2="24" y2="5" stroke="#fff" stroke-width="5" />
+                    <line x1="3" y1="22.4" x2="24" y2="43" stroke="#fff" stroke-width="5" />
+                    <line x1="5" y1="24" x2="48" y2="24" stroke="#fff" stroke-width="5" />
+                </svg>
+            <h1>加班申請</h1>
+        </header>
+        <main>
+        <table>
+            <tbody>
+                <tr>
+                    <th>加班日期</th>
+                    <td>
+                        <input type="text" id="datepick" readonly="true">
+                    </td>
+                </tr>
+                <tr>
+                    <th>開始時間</th>
+                    <td>
+                        <input type="text" id="start-timepick" readonly="true">
+                        <!-- <select name="" id="start-timepick" class="timepicker"></select> -->
+                    </td>
+                </tr>
+                <tr>
+                    <th>結束時間</th>
+                    <td>
+                        <input type="text" id="end-timepick" readonly="true">
+                    </td>
+                </tr>
+                <tr>
+                    <th>時數</th>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <th>加班原因</th>
+                    <td>
+                        <select name="" id="">
+                            <option value="">ESS111</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>計劃補休</th>
+                    <td>
+                        <select name="" id="">
+                            <option value="">ESS111</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>加班類型</th>
+                    <td>
+                        <select name="" id="">
+                            <option value="">ESS111</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>備註</th>
+                    <td>
+                        <textarea name="Area" id="Area" cols="10" rows="1" style="width: 100%"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <aside class="pink-bg">
+                            <strong>加班規則</strong><br>
+                            <div class="inline-list">
+                                <div>加班起迄：</div>
+                                <div>
+                                    <div>上午起08:00，上午迄14:30</div>
+                                    <div>下午起18:00，下午迄23:30</div>
+                                </div>
+                            </div>
+                            依勞基法第38條規定，年假不得超出30日
+                        </aside>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        </main>
+        <footer>
+            <div id="button-area">
+                <div>送出</div>
+            </div>
+        </footer>
+    </div>
+<script>
+$(function(){
+    laydate.render({
+        elem: '#datepick',
+        showBottom: false
+    });
+    // lay('.timepick').each(function(){
+    //   laydate.render({
+    //     elem: this,
+    //     trigger: 'click',
+    //     type: 'time',
+    //     format:'HH:mm'
+    //   });
+    // }); 
+    laydate.render({
+        elem: '#start-timepick',
+        type: 'time',
+        format:'HH:mm'
+    });
+    laydate.render({
+        elem: '#end-timepick',
+        type: 'time',
+        format:'HH:mm'
+    });
+})
+</script>
+</body>
+</html>

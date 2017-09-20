@@ -1,0 +1,11 @@
+ // 記錄成功登錄帳號
+
+CREATE TABLE HCP.Ares_Token
+(
+ 
+  lgdate      DATE DEFAULT sysdate,
+  username    VARCHAR2(50 BYTE),
+  userid    VARCHAR2(50 BYTE),  
+  CONSTRAINT constraint_name PRIMARY KEY (username)    
+)
+ 

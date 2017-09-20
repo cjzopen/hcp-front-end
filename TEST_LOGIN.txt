@@ -1,0 +1,15 @@
+http://localhost/eHR_H5/index.php/login
+
+insert into ehr_md_content(code,text)
+values('overtime_apply_rule_b','<span style="background-color: rgb(255,255,0)">一、加班時段未用餐者，請於備註欄最前方註明未用餐，未註明者將會駁回請重新送單；<br />
+加班時段有休息用餐在開始時間須先扣除休息時間，其顯示時數才為實際加班時數。<br />
+</span>')
+
+
+
+
+update ehr_md_content
+set text= '<span style="background-color: rgb(255,255,0)">請假起迄：上午起：08:00、下午起：13:30 上午迄：12:00、下午迄：17:30<br/>
+依勞基法第38條規定，年假的不得超出30日。
+</span>'
+where code='leave_apply_rule_b'
